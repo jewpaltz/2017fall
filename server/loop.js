@@ -1,13 +1,17 @@
 let str = "";
+let arr = [];
 
-
-function writeChars(start, end, length, depth = 0){
+function writeChars(start, end, length, depth = 1){
     for (let i = start; i < end; i++) {
-        str += String.fromCharCode(i + 65);
+        //str += String.fromCharCode(i + 65);
+        arr[depth -1] = String.fromCharCode(i + 65);
+        //console.log(arr);
+        if(depth < 3)
+            console.log({depth: depth, i: i, arr: arr});
         if(length > depth){
             writeChars(start, end, length, depth + 1);
-        } if(depth == 0){
-            str += "\n";
+        } else{
+            arr.pop();
         }
     }
 }
@@ -15,7 +19,7 @@ function writeChars(start, end, length, depth = 0){
 console.log(new Date());
 console.log( "\n");
 
-writeChars(0, 3, 3);
+writeChars(0, 128, 5);
             console.log(str);
 
 console.log(new Date());
