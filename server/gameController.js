@@ -10,7 +10,6 @@ router
     .get("/room/quotes", (req, res) => res.send(game.room.quotes))
     .post("/room/picture",(req, res) => {
         game.room.picture = game.getNextPicture();
-        console.log(game.room.picture);
     })
 
 
