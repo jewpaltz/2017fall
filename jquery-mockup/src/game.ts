@@ -35,6 +35,20 @@ export class Room {
             this.players.map( x => `<li class="list-group-item">${x.name}</li>` ).join("")
         );
     }
+    update(){
+            $.get("/game/room/picture").done( data => {
+                this.picture = data;
+                this.drawPicture();
+            })
+            $.getJSON("/game/room/quotes").done( data =>{
+                this.quotes = data;
+                this.drawQuotes();
+            })
+    }
+    init(){
+        room.drawPlayers();
+        setInterval(() => this.update(), 1000);
+    }
 }
 
 export class Game {
@@ -59,23 +73,23 @@ export class Game {
 const game = new Game();
 const room = new Room();
 const me = new Player();
-var i = 0;
 
 game.init().done(()=>{
-    room.picture = game.pictures[i];
-    room.drawPicture();
-    room.drawQuotes();
-    room.drawPlayers();
 
     me.quotes = game.quotes;
     me.drawQuotes();
 
 });
+room.init();
 
 
 $("#cmd-flip").click(function(e){
     e.preventDefault();
-    i++;
-    room.picture = game.pictures[i];
-    room.drawPicture();
+    $.post("/game/room/picture")
+})
+
+$("#my-quotes").click("li",function(e){
+    e.preventDefault();
+    var target: any = e.originalEvent.target;
+    $.post("/game/room/quotes", { text: target.text() })
 })
