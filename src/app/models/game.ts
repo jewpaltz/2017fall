@@ -43,20 +43,6 @@ export class Room {
         );
     }
 
-    update(){
-        $.get("/game/room/picture").done( data => {
-            this.picture = data;
-            this.drawPicture();
-        });
-        $.getJSON("/game/room/quotes").done( data =>{
-            this.quotes = data;
-            this.drawQuotes();
-        });
-    }
-
-    init(){
-        setInterval(()=> this.update(), 1000)
-    }
 }
 
 
@@ -66,7 +52,6 @@ const room = new Room();
 const me = new Player();
 me.init();
 
-room.init();
 room.drawPlayers();
 
 
