@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Room, Player, Quote } from '../models/game';
-
-import * as $ from 'jquery';
-
+import { Http } from "@angular/http";
 
 @Component({
   selector: 'app-play',
@@ -13,35 +11,47 @@ export class PlayComponent implements OnInit {
 
     apiRoot = "//localhost:3001"
     room = new Room();
-    me = new Player();
-    constructor() { }
+    me:Player;
+
+    availablePlayers = [ { name: "Moshe Plotkin"}, { name: "Bracha Plotkin"}]
+    constructor(private http: Http) { }
 
     ngOnInit() {
         setInterval(()=> this.update(), 1000)
-        $.getJSON(this.apiRoot + "/game/quotes").done( data =>{
-            this.me.quotes = data;
-        })
     }
 
     update(){
-        $.get(this.apiRoot + "/game/room/picture").done( data => {
-            this.room.picture = data;
+        this.http.get(this.apiRoot + "/game/room").subscribe( data => {
+            this.room = data.json();
         });
-        $.getJSON(this.apiRoot + "/game/room/quotes").done( data =>{
-            this.room.quotes = data;
-        });
+    }
+
+    logon(e: MouseEvent, i: number){
+        e.preventDefault();
+        const player = this.availablePlayers[i];
+        this.http.post(this.apiRoot + "/game/room/players", player)
+            .subscribe(data=> {
+                this.me = {... player, id: +data.text()}
+                this.http.get(this.apiRoot + "/game/quotes").subscribe( data =>{
+                    this.me.quotes = data.json();
+                })
+            });
     }
 
     flipPicture(e: MouseEvent){
         e.preventDefault();
-        $.post(this.apiRoot + "/game/room/picture")
+        this.http.post(this.apiRoot + "/game/room/picture", {})
+            .subscribe();
     }
     
     submitQuote(e: MouseEvent, quote: Quote, i: number){
         e.preventDefault();
-        const data = { text: quote.text };
-        $.post(this.apiRoot + "/game/room/quotes", data);
-        this.me.quotes.splice(i, 1);
+        const data = { text: quote.text, playerId: 0 };
+        this.http.post(this.apiRoot + "/game/room/quotes", data)
+            .subscribe(data=> {
+                this.me.quotes.splice(i, 1);
+                this.me.quotes.push(data.json());
+            });
     }
     
 

@@ -1,16 +1,20 @@
 
 export class Quote {
-    text: string
+    text: string;
+    player?: Player
 }
 
 export class Player {
-    name: string = "Moshe Plotkin";
-    quotes: Quote[] = [];
-    score: number = 0;
+        public readonly id: number;
+        public name: string = "Moshe Plotkin";
+        public quotes?: Quote[] = [];
+        public score?: number = 0;
+  constructor(
+    ){}
 }
 
 export class Room {
-    players: Player[] = [new Player(), new Player()];
+    players: Player[] = [];
     dealer: Player;
     picture: string;
     quotes: Quote[] = [];

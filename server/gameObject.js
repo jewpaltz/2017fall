@@ -13,7 +13,9 @@ const game = {
     getNextQuote: ()=> game.quotes[iCurrentQuote++],
     room: {
         picture: "",
-        quotes: []
+        quotes: [],
+        players: [],
+        dealer: 0
     }
 }
 
