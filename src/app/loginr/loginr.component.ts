@@ -10,14 +10,17 @@ import { Router } from '@angular/router';
 })
 export class LoginrComponent implements OnInit {
 
-  constructor(private game: GameService, private router: Router) { }
+    name:string;
+    password: string;
 
-  ngOnInit() {
-  }
 
-  login(){
-    this.game.me = new Player();
-    this.router.navigate(['/play']);
-  }
+    constructor(private game: GameService, private router: Router) { }
+
+    ngOnInit() {
+    }
+
+    login(){
+        this.game.login(this.name, this.password)
+    }
 
 }
