@@ -22,5 +22,8 @@ export class LoginrComponent implements OnInit {
     login(){
         this.game.login(this.name, this.password)
     }
+    loginFB(){
+        this.game.loginFB();
+    }
 
 }
