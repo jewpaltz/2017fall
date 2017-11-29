@@ -9,10 +9,11 @@ declare var FB: any;
 @Injectable()
 export class GameService {
 
-    apiRoot = "//localhost:3001"    
+    apiRoot: string;   
     me: Player;
 
     constructor(private http: Http, private router: Router) {
+        this.apiRoot = `//${window.location.hostname}:8081` 
         window.fbAsyncInit = function() {
             FB.init({
               appId      : '954556401368395',
