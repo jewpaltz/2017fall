@@ -11,6 +11,7 @@ import { PlayComponent } from './play/play.component';
 import { IndexComponent } from './index/index.component';
 import { GameService } from './models/game.service';
 import { LoginrComponent } from './loginr/loginr.component';
+import { PictureChooserComponent } from './widgets/picture-chooser/picture-chooser.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { LoginrComponent } from './loginr/loginr.component';
     NavComponent,
     PlayComponent,
     IndexComponent,
-    LoginrComponent
+    LoginrComponent,
+    PictureChooserComponent
   ],
   imports: [
     BrowserModule,
