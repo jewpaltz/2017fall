@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Nav } from "./_nav.tsx";
+import { Nav } from "./_nav";
 
-export const Header = () =>
+export const Header = (props: { route: string, onNavigate:any }) =>
     <header>
         <div className="container">
             <div className="row">
@@ -11,6 +11,6 @@ export const Header = () =>
                 <h2 className="col-md-11">What do you Meme?</h2>
             </div>
             
-            <Nav />
+            <Nav route={props.route} onNavigate={props.onNavigate} />
         </div>
     </header>
